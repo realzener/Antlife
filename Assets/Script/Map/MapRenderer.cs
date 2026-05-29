@@ -3,18 +3,34 @@ using UnityEngine.Tilemaps;
 
 public class MapRenderer : MonoBehaviour
 {
-    public Tilemap tilemap;
-    public Tilemap tilemapBuild;
-    public MapGenerator generator;
+    public static MapRenderer Instance { get; private set; }
 
+    public Tilemap tilemapGround;
+    public Tilemap tilemapBuild;
+    private Tilemap tilemap;
+    public MapGenerator generator = MapGenerator.Instance;
+
+    
     public TileBase grassTile;
     public TileBase waterTile;
     public TileBase sandTile;
     public TileBase emptyTile;
 
-    
-    public void DrawTileGrid(GridGen<TileData> map)
+    private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
+
+    public void DrawTileGrid(GridGen<TileData> map, int i)
+    {
+        Tilemap tilemap = (i == 0) ? tilemapGround : tilemapBuild;
+        Debug.Log("start");
         tilemap.ClearAllTiles();
 
 
@@ -25,10 +41,23 @@ public class MapRenderer : MonoBehaviour
                 tilemap.SetTile(
                     new Vector3Int(x, y, 0),
                     GetTile(map.Get(x, y).Type)
+                    
                 );
+                Debug.Log("middle");
             }
         }
     }
+    
+
+    public void DrawTile(int x, int y, TileData data)
+    {
+        tilemapGround.SetTile(
+            new Vector3Int(x, y, 0),
+            GetTile(data.Type)
+        );
+    }
+
+
 
     TileBase GetTile(TileType type)
     {

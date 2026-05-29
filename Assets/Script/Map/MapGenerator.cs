@@ -3,37 +3,57 @@ using UnityEngine;
 public class MapGenerator : MonoBehaviour
 {
     
-    [SerializeField] private int width = 200;
-    [SerializeField] private int height = 200;
+
+    public static MapGenerator Instance { get; private set; }
+    private MapRenderer Renderer;
+
+
+    [SerializeField] public int width = 1000;
+    [SerializeField] public int height = 1000;
     public float noiseScale = 0.1f;
-    [SerializeField] private MapRenderer Renderer;
+   
 
     public GridGen<TileData> MapGround;
     public GridGen<TileData> MapBuild;
 
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
+
+
     public void Generate()
     {
+        MapGround = new GridGen<TileData>(width, height, (x,y) => {return new TileData(TileType.Grass);});
+        MapBuild = new GridGen<TileData>(width, height, (x,y) => {return new TileData(TileType.Empty);});
 
-        MapBuild = new(width, height);
-        MapGround = new(width, height);
+        GenerateGround();
+        GenerateBuild();
+    }
 
-
-        //mapground
+    public void GenerateGround(){
+        Debug.Log("GenerateGround");
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
 
 
-                float n = Mathf.PerlinNoise(x * noiseScale, y * noiseScale);
+                float n = Mathf.PerlinNoise((x + 1000f) * noiseScale, (y + 1000f) * noiseScale);
 
 
                 //  MapGround[location] = new TilData(TileType, walkable?)
-                if (n < 0.4f)
+                if (n < 0.2f)
                 {
                     MapGround.Set(x, y, new TileData(TileType.Water));
                 }
-                else if (n < 0.45f)
+                else if (n < 0.75f)
                 {
                     MapGround.Set(x, y, new TileData(TileType.Sand));
                 }
@@ -43,8 +63,9 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         }
+    }
 
-
+    public void GenerateBuild(){
         //map build
         for (int x = 0; x < width; x++)
         {
@@ -60,7 +81,7 @@ public class MapGenerator : MonoBehaviour
         if (x < 0 || x >= width || y < 0 || y >= height)  {Debug.LogError("out of bounds"); return;}
 
         MapBuild.Set(x,y, new TileData(type));
-        Renderer.DrawTileGrid(MapGround);
+        Renderer.DrawTile(x,y, MapBuild.Get(x, y));
     }
 
 
