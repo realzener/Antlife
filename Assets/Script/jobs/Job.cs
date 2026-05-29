@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class Job
 {
-
+    public Vector3Int tilePosition { get; private set; }
     
     Tile tile;
     float jobTime;
@@ -15,9 +15,9 @@ public class Job
 
 
 
-    public Job(Tile tile, Action<Job> cbJobComplete, float jobTime= 1f)
+    public Job(Vector3Int tilePosition, Action<Job> cbJobComplete, float jobTime= 1f)
     {
-        this.tile = tile;
+        this.tilePosition = tilePosition;
         this.cbJobComplete += cbJobComplete;
         this.jobTime = jobTime;
     }
@@ -32,17 +32,12 @@ public class Job
         jobTime -= worktime;
         if(jobTime <= 0)
         {
-            if(cbJobComplete !=null){
-                cbJobComplete(this);
-            }
+            cbJobComplete?.Invoke(this);
         }
     }
 
     public void CancelJob()
     {
-        if(cbJobCancel != null)
-        {
-            cbJobCancel(this);
-        }
+        cbJobCancel?.Invoke(this);
     }
 }

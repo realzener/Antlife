@@ -10,14 +10,13 @@ public class MapRenderer : MonoBehaviour
     public TileBase grassTile;
     public TileBase waterTile;
     public TileBase sandTile;
+    public TileBase emptyTile;
 
     
-
-    public void DrawGround()
+    public void DrawTileGrid(GridGen<TileData> map)
     {
         tilemap.ClearAllTiles();
 
-        var map= generator.MapGround;
 
         for (int x = 0; x < map.GetLength(0); x++)
         {
@@ -25,25 +24,7 @@ public class MapRenderer : MonoBehaviour
             {
                 tilemap.SetTile(
                     new Vector3Int(x, y, 0),
-                    GetTile(map[x, y].Type)
-                );
-            }
-        }
-    }
-
-    public void DrawBuild()
-    {
-        tilemapBuild.ClearAllTiles();
-
-        var map= generator.MapBuild;
-
-        for (int x = 0; x < map.GetLength(0); x++)
-        {
-            for (int y = 0; y < map.GetLength(1); y++)
-            {
-                tilemapBuild.SetTile(
-                    new Vector3Int(x, y, 0),
-                    GetTile(map[x, y].Type)
+                    GetTile(map.Get(x, y).Type)
                 );
             }
         }
@@ -57,13 +38,8 @@ public class MapRenderer : MonoBehaviour
             TileType.Water => waterTile,
 
             TileType.Sand => sandTile,
-            TileType.Empty => sandTile,
+            TileType.Empty => emptyTile,
             _ => grassTile
         };
-    }
-
-    void Update()
-    {
-        DrawBuild();
     }
 }

@@ -7,15 +7,10 @@ public class TileData
     {
         Type = type;
 
-        switch(type)
+        Walkable = type switch
         {
-            case TileType.Water:
-                Walkable = false;
-                break;
-
-            default:
-                Walkable = true;
-                break;
-        }
+            TileType.Water => false,
+            _ => true
+        };
     }
 }

@@ -2,19 +2,20 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
-    public int width = 200;
-    public int height = 200;
+    
+    [SerializeField] private int width = 200;
+    [SerializeField] private int height = 200;
     public float noiseScale = 0.1f;
     [SerializeField] private MapRenderer Renderer;
 
-    public TileData[,] MapGround { get; private set; }
-    public TileData[,] MapBuild { get; private set; }
+    public GridGen<TileData> MapGround;
+    public GridGen<TileData> MapBuild;
 
     public void Generate()
     {
 
-        MapGround = new TileData[width, height];
-        MapBuild = new TileData[width, height];
+        MapBuild = new(width, height);
+        MapGround = new(width, height);
 
 
         //mapground
@@ -30,15 +31,15 @@ public class MapGenerator : MonoBehaviour
                 //  MapGround[location] = new TilData(TileType, walkable?)
                 if (n < 0.4f)
                 {
-                    MapGround[x, y] = new TileData(TileType.Water);
+                    MapGround.Set(x, y, new TileData(TileType.Water));
                 }
                 else if (n < 0.45f)
                 {
-                    MapGround[x, y] = new TileData(TileType.Sand);
+                    MapGround.Set(x, y, new TileData(TileType.Sand));
                 }
                 else
                 {
-                    MapGround[x, y] = new TileData(TileType.Grass);
+                    MapGround.Set(x, y, new TileData(TileType.Grass));
                 }
             }
         }
@@ -49,7 +50,7 @@ public class MapGenerator : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                MapBuild[x, y] = new TileData(TileType.Empty);
+                MapBuild.Set(x, y, new TileData(TileType.Empty));
             }
         }
     }
@@ -58,8 +59,8 @@ public class MapGenerator : MonoBehaviour
     {
         if (x < 0 || x >= width || y < 0 || y >= height)  {Debug.LogError("out of bounds"); return;}
 
-        MapBuild[x, y] = new TileData(type);
-        Renderer.DrawBuild();
+        MapBuild.Set(x,y, new TileData(type));
+        Renderer.DrawTileGrid(MapGround);
     }
 
 

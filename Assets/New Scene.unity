@@ -163,7 +163,7 @@ Transform:
   m_GameObject: {fileID: 165396776}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -20.39979, y: 0.3737, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -195,8 +195,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d617acf2aac74d25834a225a313dc43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MapGenerator
-  width: 1
-  height: 1
+  width: 100
+  height: 100
   noiseScale: 0.05
   Renderer: {fileID: 165396781}
 --- !u!114 &165396781
@@ -217,6 +217,7 @@ MonoBehaviour:
   grassTile: {fileID: 11400000, guid: 530f292c28eeb70d4af4e6df389db8af, type: 2}
   waterTile: {fileID: 11400000, guid: 2de0ef9e0965389889ac496982c0a7f7, type: 2}
   sandTile: {fileID: 11400000, guid: 494562418dcbff677af016d314b2e9a6, type: 2}
+  emptyTile: {fileID: 11400000, guid: 019bea17f5509bc14b77fedb37b5309a, type: 2}
 --- !u!114 &232120144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1795,7 +1796,7 @@ GameObject:
   - component: {fileID: 1567549139}
   - component: {fileID: 1567549138}
   - component: {fileID: 1567549137}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1885,7 +1886,7 @@ Transform:
   m_GameObject: {fileID: 1567549136}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.07, y: 0.71, z: 0}
+  m_LocalPosition: {x: -9.46, y: -0.37, z: -0.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1918,7 +1919,7 @@ Transform:
   m_GameObject: {fileID: 1957334118}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.34}
+  m_LocalPosition: {x: 0, y: 0, z: -2.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

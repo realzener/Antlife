@@ -8,7 +8,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         generator.Generate();
-        Renderer.DrawGround();
-        Renderer.DrawBuild();
+        Renderer.DrawTileGrid(generator.MapGround);
+        Renderer.DrawTileGrid(generator.MapBuild);
     }
 }
