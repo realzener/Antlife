@@ -6,6 +6,8 @@ public class MapGenerator : MonoBehaviour
 
     public static MapGenerator Instance { get; private set; }
     private MapRenderer Renderer;
+    public Pathfinding pathfinding;
+
 
 
     [SerializeField] public int width = 1000;
@@ -33,8 +35,11 @@ public class MapGenerator : MonoBehaviour
         MapGround = new GridGen<TileData>(width, height, (x,y) => {return new TileData(TileType.Grass);});
         MapBuild = new GridGen<TileData>(width, height, (x,y) => {return new TileData(TileType.Empty);});
 
+        pathfinding = new Pathfinding(width, height);
+
         GenerateGround();
         GenerateBuild();
+
     }
 
     public void GenerateGround(){
@@ -53,7 +58,7 @@ public class MapGenerator : MonoBehaviour
                 {
                     MapGround.Set(x, y, new TileData(TileType.Water));
                 }
-                else if (n < 0.75f)
+                else if (n < 0.45f)
                 {
                     MapGround.Set(x, y, new TileData(TileType.Sand));
                 }

@@ -3,10 +3,38 @@ using UnityEngine;
 
 public class JobQueue : MonoBehaviour
 {
-    Queue<Job> jobQueue;
+  public static JobQueue Instance;
+  Queue<Job> jobQueue;
+  public int Count => jobQueue.Count;
 
-    void OnEnable()
+  void Awake()
+  {
+    Instance = this;
+    jobQueue = new Queue<Job>();  
+  }
+
+  public void AddJob(Job job)
     {
-      jobQueue = new Queue<Job>();  
+        jobQueue.Enqueue(job);
+    }
+
+
+    public Job GetNextJob()
+    {
+        if (jobQueue.Count == 0)
+            return null;
+
+        return jobQueue.Dequeue();
+    }
+
+    public Job PeekJob()
+    {
+        if (jobQueue.Count == 0)
+            return null;
+
+        return jobQueue.Peek();
+
+
     }
 }
+

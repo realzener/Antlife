@@ -132,6 +132,8 @@ GameObject:
   - component: {fileID: 165396781}
   - component: {fileID: 165396780}
   - component: {fileID: 165396779}
+  - component: {fileID: 165396783}
+  - component: {fileID: 165396782}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -181,8 +183,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 921d0aa21c8e6c102bb58a978e0a5b93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameController
-  generator: {fileID: 165396780}
-  Renderer: {fileID: 165396781}
 --- !u!114 &165396780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,10 +195,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d617acf2aac74d25834a225a313dc43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MapGenerator
-  width: 100
-  height: 100
+  width: 200
+  height: 200
   noiseScale: 0.05
-  Renderer: {fileID: 165396781}
 --- !u!114 &165396781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,13 +210,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06af045e57a8d8965822e3a943a08c2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MapRenderer
-  tilemap: {fileID: 546195056}
+  tilemapGround: {fileID: 546195056}
   tilemapBuild: {fileID: 1957334121}
   generator: {fileID: 165396780}
   grassTile: {fileID: 11400000, guid: 530f292c28eeb70d4af4e6df389db8af, type: 2}
   waterTile: {fileID: 11400000, guid: 2de0ef9e0965389889ac496982c0a7f7, type: 2}
   sandTile: {fileID: 11400000, guid: 494562418dcbff677af016d314b2e9a6, type: 2}
   emptyTile: {fileID: 11400000, guid: 019bea17f5509bc14b77fedb37b5309a, type: 2}
+--- !u!114 &165396782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165396776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d497b395aae5925408e60358e1c836ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TestJobSpawner
+  jobPosition: {x: 20, y: 20, z: 0}
+--- !u!114 &165396783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165396776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49af4b99d1cbb6ee59315fcf36f3ae78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JobManager
+  isAssigned: 0
 --- !u!114 &232120144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -789,7 +814,7 @@ TilemapRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0.0714286, y: 0.0714286, z: 0}
+  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
@@ -1287,7 +1312,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5.511911
+  orthographic size: 13.34
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -1312,7 +1337,7 @@ Transform:
   m_GameObject: {fileID: 714941482}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3052794, y: -0.13300596, z: -10}
+  m_LocalPosition: {x: 4.55, y: 3.8, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1330,6 +1355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8661774158364bab8c60bef869c75d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MouseController
+  gameController: {fileID: 165396779}
   generator: {fileID: 165396780}
 --- !u!213 &955053234
 Sprite:
@@ -1796,6 +1822,7 @@ GameObject:
   - component: {fileID: 1567549139}
   - component: {fileID: 1567549138}
   - component: {fileID: 1567549137}
+  - component: {fileID: 1567549140}
   m_Layer: 3
   m_Name: ant
   m_TagString: Untagged
@@ -1886,12 +1913,25 @@ Transform:
   m_GameObject: {fileID: 1567549136}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.46, y: -0.37, z: -0.24}
+  m_LocalPosition: {x: 1, y: 1, z: -0.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1567549140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1567549136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11f7165dc530b23afad1695e1255c892, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AntAI
+  state: 0
 --- !u!1 &1957334118
 GameObject:
   m_ObjectHideFlags: 0
@@ -1975,7 +2015,7 @@ TilemapRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0.0714286, y: 0.0714286, z: 0}
+  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0

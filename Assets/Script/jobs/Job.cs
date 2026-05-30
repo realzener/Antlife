@@ -9,11 +9,12 @@ public class Job
     
     Tile tile;
     float jobTime;
+    public bool isAssigned;
 
     Action<Job> cbJobComplete;
     Action<Job> cbJobCancel;
-
-
+    private bool isCompleted;
+    private bool isCancelled;
 
     public Job(Vector3Int tilePosition, Action<Job> cbJobComplete, float jobTime= 1f)
     {
@@ -27,17 +28,42 @@ public class Job
     public void RegisterJobCancelCallback(Action<Job> cb){cbJobCancel += cb;}
 
 
-    public void DoWork(float worktime)
+    public bool DoWork(float worktime)
     {
+        if (isCompleted || isCancelled)
+            return true;
+            
         jobTime -= worktime;
+
         if(jobTime <= 0)
         {
-            cbJobComplete?.Invoke(this);
+            Complete();
+            return true;
         }
+        return false;
+    }
+
+    public void Assign()
+    {
+        isAssigned = true;
+    }
+
+
+    private void Complete()
+    {
+        if (isCompleted|| isCancelled) return;
+
+        isCompleted = true;
+        cbJobComplete?.Invoke(this);
     }
 
     public void CancelJob()
     {
+        if (isCancelled || isCompleted) return;
+
+        isCancelled = true;
         cbJobCancel?.Invoke(this);
     }
+
+    public bool IsDone => isCompleted || isCancelled;
 }

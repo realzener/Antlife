@@ -9,7 +9,7 @@ public class Ant : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     public MagicState magic;
 
-    public int happiness;
+    public int[,] happiness;
 
 
 

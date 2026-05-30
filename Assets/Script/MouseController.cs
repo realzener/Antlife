@@ -8,13 +8,13 @@ using UnityEngine.InputSystem;
 public class MouseController : MonoBehaviour
 {
     [SerializeField]    GameController gameController;
-    Pathfinding pathfinding;
+    public Pathfinding pathfinding;
 
     [SerializeField] private MapGenerator generator;
 
     private void Start()
     {
-        pathfinding = new Pathfinding(generator.width, generator.height);
+        
     }
     void Update()
     {
