@@ -10,14 +10,16 @@ public class TileData
 
         Walkable = type switch
         {
-            TileType.Water => false,
+            TileType.DeepWater=> false,
             TileType.Empty => false,
             _ => true
         };
 
         Walkspeed = type switch
         {
-            TileType.Sand => 0.3f,
+            TileType.Sand => 0.8f,
+            TileType.Water => 0.3f,
+            TileType.Mud => 0.5f,
             _ => 1
         };
 

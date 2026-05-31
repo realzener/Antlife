@@ -7,6 +7,8 @@ public class MapGenerator : MonoBehaviour
     public static MapGenerator Instance { get; private set; }
     private MapRenderer Renderer;
     public Pathfinding pathfinding;
+    float offsetX;
+    float offsetY;
 
 
 
@@ -18,6 +20,11 @@ public class MapGenerator : MonoBehaviour
     public GridGen<TileData> MapGround;
     public GridGen<TileData> MapBuild;
 
+    [SerializeField] private float deepWaterThreshold = 0.15f;
+    [SerializeField] private float waterThreshold = 0.20f;
+    [SerializeField] private float sandThreshold = 0.25f;
+    [SerializeField] private float mudThreshold = 0.35f;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -27,6 +34,8 @@ public class MapGenerator : MonoBehaviour
         }
 
         Instance = this;
+        offsetX = Random.Range(0f, 10000f);
+        offsetY = Random.Range(0f, 10000f);
     }
 
 
@@ -50,17 +59,25 @@ public class MapGenerator : MonoBehaviour
             {
 
 
-                float n = Mathf.PerlinNoise((x + 1000f) * noiseScale, (y + 1000f) * noiseScale);
+                float n = Mathf.PerlinNoise((x + offsetX) * noiseScale, (y + offsetY) * noiseScale);
 
 
                 //  MapGround[location] = new TilData(TileType, walkable?)
-                if (n < 0.2f)
+                if (n < deepWaterThreshold)
+                {
+                    MapGround.Set(x, y, new TileData(TileType.DeepWater));
+                }
+                else if (n < waterThreshold)
                 {
                     MapGround.Set(x, y, new TileData(TileType.Water));
                 }
-                else if (n < 0.45f)
+                else if (n < sandThreshold)
                 {
                     MapGround.Set(x, y, new TileData(TileType.Sand));
+                }
+                else if (n < mudThreshold)
+                {
+                    MapGround.Set(x, y, new TileData(TileType.Mud));
                 }
                 else
                 {
@@ -68,6 +85,7 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         }
+        pathfinding.RefreshGrid();
     }
 
     public void GenerateBuild(){

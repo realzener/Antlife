@@ -29,10 +29,6 @@ public class Pathfinding
         PathNode startNode = grid.Get(startX,startY);
         PathNode endNode = grid.Get(endX,endY);
 
-        openList = new List<PathNode>{startNode};
-        startNode.inOpen = true;
-        closedList = new List<PathNode>();
-        Debug.Log("clickly3");
 
         for (int x = 0; x < grid.GetLength(0); x++){
             for (int y = 0; y < grid.GetLength(1); y++)
@@ -45,10 +41,16 @@ public class Pathfinding
                     pathNode.inClosed = false;
                 }
             }
-            Debug.Log("clickly4");
+
+
+        openList = new List<PathNode>{startNode};
+        startNode.inOpen = true;
+       // closedList = new List<PathNode>();
+
         startNode.GCost = 0;
         startNode.HCost = CalculateDistanceCost(startNode, endNode);
         startNode.CalculateFCost();
+
 
         while (openList.Count > 0)
         {
@@ -61,7 +63,7 @@ public class Pathfinding
             
             openList.Remove(currentNode);
             currentNode.inOpen = false;
-            closedList.Add(currentNode);
+            //closedList.Add(currentNode);
             currentNode.inClosed = true;
 
             foreach (PathNode neighbourNode in FindNeighbours(currentNode))
@@ -69,8 +71,6 @@ public class Pathfinding
                 if( neighbourNode.inClosed) continue;
                 if(!neighbourNode.iswalkable)
                 {
-                    neighbourNode.inClosed = true;
-                    neighbourNode.inOpen = false;
                     continue;
                 }
 
@@ -184,4 +184,29 @@ public class Pathfinding
         }
         return lowestFCostnode;
     }
+
+    public void UpdateNode(int x, int y)
+    {
+        PathNode node = grid.Get(x, y);
+        var ground = MapGenerator.Instance.MapGround.Get(x, y);
+
+        node.iswalkable = ground.Walkable;
+        node.Walkspeed = ground.Walkspeed;
+    }
+
+    public void RefreshGrid()
+    {
+        for (int x = 0; x < grid.Width; x++)
+        {
+            for (int y = 0; y < grid.Height; y++)
+            {
+                PathNode node = grid.Get(x, y);
+                var ground = MapGenerator.Instance.MapGround.Get(x, y);
+
+                node.iswalkable = ground.Walkable;
+                node.Walkspeed = ground.Walkspeed;
+            }
+        }
+    }
+
 }

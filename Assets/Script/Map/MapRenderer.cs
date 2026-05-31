@@ -13,8 +13,10 @@ public class MapRenderer : MonoBehaviour
     
     public TileBase grassTile;
     public TileBase waterTile;
+    public TileBase deepWaterTile;
     public TileBase sandTile;
     public TileBase emptyTile;
+    public TileBase mudTile;
 
     private void Awake()
     {
@@ -65,9 +67,10 @@ public class MapRenderer : MonoBehaviour
         {
             TileType.Grass => grassTile,
             TileType.Water => waterTile,
-
+            TileType.DeepWater => deepWaterTile,
             TileType.Sand => sandTile,
             TileType.Empty => emptyTile,
+            TileType.Mud => mudTile,
             _ => grassTile
         };
     }

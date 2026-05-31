@@ -31,7 +31,7 @@ public class MouseController : MonoBehaviour
 
             //pathfinding.GetGrid().Get(Mathf.FloorToInt(world.x), Mathf.FloorToInt(world.y) );
             Debug.Log("clickly1");
-            List<PathNode> path = pathfinding.FindPath(0,0, Mathf.FloorToInt(world.x), Mathf.FloorToInt(world.y));
+            List<PathNode> path = MapGenerator.Instance.pathfinding.FindPath(0,0, Mathf.FloorToInt(world.x), Mathf.FloorToInt(world.y));
             Debug.Log("clickly2");
             if (path != null) {
                 Debug.Log("not null");

@@ -46,7 +46,7 @@ public class AntAI : MonoBehaviour
         if (thinkTimer > 0f)
             return;
 
-        thinkTimer = Random.Range(0.1f, 0.3f);
+        thinkTimer = Random.Range(0.1f, 1.7f);
 
         switch (state)
         {
@@ -58,6 +58,8 @@ public class AntAI : MonoBehaviour
 
     void TryGetJob()
     {
+        if(JobManager.Instance ==null)
+            return;
         currentJob = JobManager.Instance.RequestJob(
             Vector3Int.RoundToInt(transform.position)
         );
@@ -141,14 +143,12 @@ public class AntAI : MonoBehaviour
         // job finished (your Job should trigger callback or null externally)
         if (finished == true)
         {
+            currentJob = null;
             state = State.Idle;
         }
         
     }
 
-    // -------------------------
-    // OPTIONAL: external reset
-    // -------------------------
     public void CancelJob()
     {
         if (currentJob != null)
