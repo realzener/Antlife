@@ -4,6 +4,7 @@ using System.IO;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Tilemaps;
 
 public class MouseController : MonoBehaviour
 {
@@ -11,10 +12,13 @@ public class MouseController : MonoBehaviour
     public Pathfinding pathfinding;
 
     [SerializeField] private MapGenerator generator;
+    [SerializeField] private Tilemap tilemap;
+    
+    private Camera mainCamera;
 
     private void Start()
     {
-        
+        mainCamera = Camera.main;
     }
     void Update()
     {
@@ -24,23 +28,17 @@ public class MouseController : MonoBehaviour
         {
             gameController.Drawall();
             Vector3 mouseScreen = Mouse.current.position.ReadValue();
-            mouseScreen.z = Mathf.Abs(Camera.main.transform.position.z);
+            mouseScreen.z = Mathf.Abs(mainCamera.transform.position.z);
 
-            Vector3 world = Camera.main.ScreenToWorldPoint(mouseScreen);
+            Vector3 worldpos = mainCamera.ScreenToWorldPoint(mouseScreen);
+
+
+
+            Vector3Int cellPosition = tilemap.WorldToCell(worldpos);
 
 
             //pathfinding.GetGrid().Get(Mathf.FloorToInt(world.x), Mathf.FloorToInt(world.y) );
-            Debug.Log("clickly1");
-            List<PathNode> path = MapGenerator.Instance.pathfinding.FindPath(0,0, Mathf.FloorToInt(world.x), Mathf.FloorToInt(world.y));
-            Debug.Log("clickly2");
-            if (path != null) {
-                Debug.Log("not null");
-                    for(int i=0; i<path.Count -1; i++){
-                        Debug.DrawLine(new Vector3(path[i].x,path[i].y) + Vector3.one , new Vector3(path[i+1].x,path[i+1].y)+ Vector3.one , Color.purple, 10f);
-                        Debug.Log("linedraw");
-                    }
-                
-            }
+            TestJobSpawner.Instance.CreateTestBuildJob(cellPosition);
         }
     }
 }

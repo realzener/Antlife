@@ -76,10 +76,10 @@ public class Pathfinding
 
                 float speed = neighbourNode.Walkspeed;
                 
-                int baseCost = CalculateDistanceCost(currentNode, neighbourNode);
-                int moveCost = Mathf.RoundToInt(baseCost / speed);
+                float baseCost = CalculateDistanceCost(currentNode, neighbourNode);
+                float moveCost = Mathf.RoundToInt(baseCost / speed);
 
-                int tentativeGcost = currentNode.GCost + moveCost;
+                float tentativeGcost = currentNode.GCost + moveCost;
                 if (tentativeGcost < neighbourNode.GCost)
                 {
                     neighbourNode.prevNode = currentNode;
@@ -145,7 +145,6 @@ public class Pathfinding
 
     private List<PathNode> CalculatePath(PathNode endNode)
     {
-        Debug.Log("path made");
         List<PathNode> path = new();
         path.Add(endNode);
         PathNode currentNode = endNode;

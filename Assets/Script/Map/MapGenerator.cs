@@ -5,7 +5,7 @@ public class MapGenerator : MonoBehaviour
     
 
     public static MapGenerator Instance { get; private set; }
-    private MapRenderer Renderer;
+
     public Pathfinding pathfinding;
     float offsetX;
     float offsetY;
@@ -104,7 +104,7 @@ public class MapGenerator : MonoBehaviour
         if (x < 0 || x >= width || y < 0 || y >= height)  {Debug.LogError("out of bounds"); return;}
 
         MapBuild.Set(x,y, new TileData(type));
-        Renderer.DrawTile(x,y, MapBuild.Get(x, y));
+        MapRenderer.Instance.DrawTile(1, x,y, MapBuild.Get(x, y));
     }
 
 

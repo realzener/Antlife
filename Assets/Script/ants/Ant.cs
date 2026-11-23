@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Ant : MonoBehaviour
@@ -10,6 +11,7 @@ public class Ant : MonoBehaviour
     public MagicState magic;
 
     public int[,] happiness;
+
 
 
 
@@ -34,7 +36,6 @@ public class Ant : MonoBehaviour
 
         spriteRenderer.sprite = antType.sprite; 
     }
-    
 }
 
 

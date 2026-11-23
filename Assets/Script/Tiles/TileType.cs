@@ -8,5 +8,6 @@ public enum TileType
     Sand,
     Hill,
     Mud,
-    Empty
+    Empty,
+    Wall
 }

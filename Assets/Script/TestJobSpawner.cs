@@ -5,11 +5,13 @@ public class TestJobSpawner : MonoBehaviour
 {
     public Vector3Int jobPositionbase;
     public Vector3Int jobPosition;
-    public int jobs = 100;
+    public int jobs = 400;
+
+    public static TestJobSpawner Instance;
 
     void Start()
     {
-        
+        Instance = this;
 
         
     }
@@ -21,6 +23,12 @@ public class TestJobSpawner : MonoBehaviour
             
             CreateTestJob();
         }
+
+        if(Keyboard.current.altKey.wasPressedThisFrame)
+        {
+            // JobManager.Instance.JobRequest();
+            Debug.LogWarning("i pressed");
+        }
     }
 
     void CreateTestJob()
@@ -29,17 +37,24 @@ public class TestJobSpawner : MonoBehaviour
         jobPosition = new Vector3Int(Random.Range(0,jobPositionbase.x), Random.Range(0,jobPositionbase.y), 0);
         Job job = new Job(jobPosition, OnJobComplete, 3f);
 
-        JobManager.Instance.AddJob(job);
+        JobManagerpiss.Instance.AddJob(job);
 
-        Debug.Log("Test Job Created at " + jobPosition);
+        //Debug.Log("Test Job Created at " + jobPosition);
         }
+    }
+
+
+    public void CreateTestBuildJob(Vector3Int jobPosition)
+    {
+        Job job = new JobBuild(TileType.Wall,jobPosition, OnJobComplete, 3f);
+
+        JobManagerpiss.Instance.AddJob(job);
     }
 
     void OnJobComplete(Job job)
     {
-        Debug.Log("Job completed at " + job.tilePosition);
+        //Debug.Log("Job completed at " + job.tilePosition);
     }
 
 
-    
 }

@@ -17,6 +17,7 @@ public class MapRenderer : MonoBehaviour
     public TileBase sandTile;
     public TileBase emptyTile;
     public TileBase mudTile;
+    public TileBase WallTile;
 
     private void Awake()
     {
@@ -45,15 +46,22 @@ public class MapRenderer : MonoBehaviour
                     GetTile(map.Get(x, y).Type)
                     
                 );
-                Debug.Log("middle");
             }
         }
     }
     
 
-    public void DrawTile(int x, int y, TileData data)
+    public void DrawTile(int map, int x, int y, TileData data)
     {
-        tilemapGround.SetTile(
+
+        tilemap = map switch
+        {
+            0 => tilemapGround,
+            1 => tilemapBuild,
+            _ => tilemapBuild
+        };
+
+        tilemap.SetTile(
             new Vector3Int(x, y, 0),
             GetTile(data.Type)
         );
@@ -71,6 +79,7 @@ public class MapRenderer : MonoBehaviour
             TileType.Sand => sandTile,
             TileType.Empty => emptyTile,
             TileType.Mud => mudTile,
+            TileType.Wall => WallTile,
             _ => grassTile
         };
     }

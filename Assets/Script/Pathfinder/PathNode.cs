@@ -5,7 +5,7 @@ public class PathNode
 {
     public int x, y;
 
-    public int GCost, HCost, FCost;
+    public float GCost, HCost, FCost;
 
     public PathNode prevNode;
 
